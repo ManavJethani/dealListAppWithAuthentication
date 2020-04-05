@@ -1,5 +1,5 @@
 import createDataContext from './createDataContext'
-import TrackerApi from '../Tracker'
+import AuthApi from '../AuthApi'
 import BakeSale from '../BackerApi'
 import AsyncStorage from '@react-native-community/async-storage'
 import { navigate } from '../navigationRef'
@@ -39,7 +39,7 @@ const clearErrorMessaage = dispatch => () => {
 const signUp = (dispatch) => {
     return async ({ email, password }) => {
         try {
-            const response = await TrackerApi.post('/signup', { email, password })
+            const response = await AuthApi.post('/signup', { email, password })
             await AsyncStorage.setItem('token', response.data.token)
             dispatch({ type: 'SIGN_UP', payload: response.data.token })
             navigate('backerFlow')
@@ -63,7 +63,7 @@ const tryLocalSignIn = dispatch => async () => {
 const signIn = (dispatch) => {
     return async ({ email, password }) => {
         try {
-            const response = await TrackerApi.post('/signin', { email, password })
+            const response = await AuthApi.post('/signin', { email, password })
             await AsyncStorage.setItem('token', response.data.token)
             dispatch({ type: 'SIGN_UP', payload: response.data.token })
             navigate('backerFlow')
